@@ -1,0 +1,24 @@
+{
+  "name": "@zakarliuka/tg-webapp-types",
+  "version": "1.0.4",
+  "description": "TS typings for Telegram WebApps. https://core.telegram.org/bots/webapps",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zakarliuka/tg-webapp-types.git"
+  },
+  "keywords": [
+    "typescript",
+    "telegram",
+    "webapps",
+    "types",
+    "typings",
+    "bots"
+  ],
+  "types": "./dist/index.d.ts",
+  "author": "Artem Zakarliuka",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/zakarliuka/tg-webapp-types/issues"
+  },
+  "homepage": "https://github.com/zakarliuka/tg-webapp-types#readme"
+}
