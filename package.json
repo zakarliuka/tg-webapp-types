@@ -1,6 +1,6 @@
 {
   "name": "@zakarliuka/tg-webapp-types",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "TS typings for Telegram WebApps. https://core.telegram.org/bots/webapps",
   "repository": {
     "type": "git",
