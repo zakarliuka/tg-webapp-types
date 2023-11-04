@@ -547,6 +547,11 @@ export declare namespace TelegramWebApp {
     /** Function that shows a native popup described by the params argument of the type PopupParams.
      * The Mini App will receive the event popupClosed when the popup is closed.
      */
+    showPopup(params: PopupParams, callback?: Function): void;
+
+    /** Function that shows a native popup described by the params argument of the type PopupParams.
+     * The Mini App will receive the event popupClosed when the popup is closed.
+     */
     showAlert(message: string, callback?: Function): void;
 
     /** Function that shows message in a simple confirmation window with 'OK' and 'Cancel' buttons.
