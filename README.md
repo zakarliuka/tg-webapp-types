@@ -57,7 +57,7 @@ For more detailed information on using these typings, please refer to the [offic
 
 ## License
 
-This module is licensed under the [Your License Name] License. See the [LICENSE.md](LICENSE.md) file for details.
+This module is licensed under the [Your License Name] License. See the [LICENSE](LICENSE) file for details.
 
 ## Support
 

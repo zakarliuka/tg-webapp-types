@@ -1,4 +1,12 @@
 export declare namespace TelegramWebApp {
+  /**
+   * - paid – invoice was paid successfully,
+   * - cancelled – user closed this invoice without paying,
+   * - failed – user tried to pay, but the payment was failed,
+   * - pending – the payment is still processing.
+   */
+  type PaymentStatus = "paid" | "cancelled" | "failed" | "pending";
+
   type ThemeParams = {
     /** Optional. Background color in the #RRGGBB format.
      *
@@ -315,7 +323,7 @@ export declare namespace TelegramWebApp {
     receiver?: WebAppUser;
 
     /** Optional. An object containing data about the chat where the bot was launched via the attachment menu.
-     * Returned for supergroups, channels, and group chats – only for Mini Apps launched via the attachment menu.
+     Returned for supergroups, channels, and group 'chats'launched via the  ;attachment menu.
      */
     chat?: WebAppChat;
 
