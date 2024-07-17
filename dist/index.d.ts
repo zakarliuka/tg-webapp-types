@@ -1,11 +1,144 @@
+/* eslint-disable @typescript-eslint/no-namespace */
 export declare namespace TelegramWebApp {
+
   /**
    * - paid – invoice was paid successfully,
    * - cancelled – user closed this invoice without paying,
    * - failed – user tried to pay, but the payment was failed,
    * - pending – the payment is still processing.
    */
+
   type PaymentStatus = "paid" | "cancelled" | "failed" | "pending";
+
+  /**
+   * This object describes the native popup for requesting permission to use biometrics.
+   */
+
+  type BiometricRequestAccessParams = {
+    /**
+     * Optional. The text to be displayed to a user in the popup describing why the bot needs access to biometrics, 0-128 characters. 
+     */
+    reason?: string;
+  };
+
+  /**
+   * This object describes the native popup for authenticating the user using biometrics.
+   */
+
+  type BiometricAuthenticateParams = {
+    /**
+     * Optional. The text to be displayed to a user in the popup describing why you are asking them to authenticate and what action you will be taking based on that authentication, 0-128 characters.
+     */
+    reason?: string;
+  };
+
+  type WebAppEventType = {
+    /**
+     * Occurs whenever theme settings are changed in the user's Telegram app (including switching to night mode).
+     * eventHandler receives no parameters, new theme settings and color scheme can be received via this.themeParams and this.colorScheme respectively.
+     */
+    themeChanged: CustomEvent;
+
+    /**
+     * Occurs when the visible section of the Mini App is changed.
+     * eventHandler receives an object with the single field isStateStable. 
+     * If isStateStable is true, the resizing of the Mini App is finished. 
+     * If it is false, the resizing is ongoing (the user is expanding or collapsing the Mini App or an animated object is playing). 
+     * The current value of the visible section’s height is available in this.viewportHeight.
+     */
+    viewportChanged: CustomEvent;
+
+    /**
+     * Occurs when the main button is pressed.
+     * eventHandler receives no parameters.
+     */
+    mainButtonClicked: CustomEvent;
+
+    /**
+     * Occurrs when the back button is pressed.
+     * eventHandler receives no parameters.
+     */
+    backButtonClicked: CustomEvent;
+
+    /**  
+     * Occurrs when the Settings item in context menu is pressed.
+     * eventHandler receives no parameters. 
+     */
+    settingsButtonClicked: CustomEvent;
+
+    /**
+     * Occurrs when the opened invoice is closed.
+     * eventHandler receives an object with the two fields: 
+     * 	url – invoice link provided and status – one of the invoice statuses:
+     * 		- paid – invoice was paid successfully,
+     * 		- cancelled – user closed this invoice without paying,
+     * 		- failed – user tried to pay, but the payment was failed,
+     * 		- pending – the payment is still processing. The bot will receive a service message about a successful payment when the payment is successfully paid.
+     */
+    invoiceClosed: CustomEvent;
+
+    /**
+     * Occurrs when the opened popup is closed.
+     * eventHandler receives an object with the single field button_id – the value of the field id of the pressed button. 
+     * If no buttons were pressed, the field button_id will be null.
+     */
+    popupClosed: CustomEvent;
+
+    /**
+     *  Occurs when the QR code scanner catches a code with text data.
+     *	eventHandler receives an object with the single field data containing text data from the QR code.
+     */
+    qrTextReceived: CustomEvent;
+
+    /**
+     * Occurs when the QR code scanner popup is closed by the user.
+     * eventHandler receives no parameters.
+     */
+    scanQrPopupClosed: CustomEvent;
+
+    /**
+     * Occurrs when the readTextFromClipboard method is called.
+     * eventHandler receives an object with the single field data containing text data from the clipboard. 
+     * If the clipboard contains non-text data, the field data will be an empty string. 
+     * If the Mini App has no access to the clipboard, the field data will be null.
+     */
+    clipboardTextReceived: CustomEvent;
+
+    /**
+     * Occurs when the write permission was requested.
+     * eventHandler receives an object with the single field status containing one of the statuses:
+     * 		- allowed – user granted write permission to the bot,
+     * 		- cancelled – user declined this request.
+     */
+    writeAccessRequested: CustomEvent;
+
+    /**
+     * Occurrs when the user's phone number was requested.
+     * eventHandler receives an object with the single field status containing one of the statuses:
+     * 		- sent – user shared their phone number with the bot,
+     * 		- cancelled – user declined this request.
+     */
+    contactRequested: CustomEvent;
+
+    /**
+     * Occurs whenever BiometricManager object is changed.
+     * eventHandler receives no parameters.
+     */
+    biometricManagerUpdated: CustomEvent;
+
+    /**
+     * Occurs whenever biometric authentication was requested.
+     * eventHandler receives an object with the field isAuthenticated containing a boolean indicating whether the user was authenticated successfully. 
+     * If isAuthenticated is true, the field biometricToken will contain the biometric token stored in secure storage on the device.
+     */
+    biometricAuthRequested: CustomEvent;
+
+    /**
+     * Occurs whenever the biometric token was updated.
+     * eventHandler receives an object with the single field isUpdated, containing a boolean indicating whether the token was updated.
+     */
+    biometricTokenUpdated: CustomEvent;
+  };
 
   type ThemeParams = {
     /** Optional. Background color in the #RRGGBB format.
@@ -49,6 +182,48 @@ export declare namespace TelegramWebApp {
      * Also available as the CSS variable var(--tg-theme-secondary-bg-color).
      */
     secondary_bg_color?: string;
+
+    /**
+     * Optional. Bot API 7.0+ Header background color in the #RRGGBB format.
+     * Also available as the CSS variable var(--tg-theme-header-bg-color).
+     */
+    header_bg_color?: string;
+
+    /**
+     * Optional. Bot API 7.0+ Accent text color in the #RRGGBB format.
+     * Also available as the CSS variable var(--tg-theme-accent-text-color).
+     */
+    accent_text_color?: string;
+
+    /**
+     * Optional. Bot API 7.6+ Section separator color in the #RRGGBB format.
+     * Also available as the CSS variable var(--tg-theme-section-separator-color).
+     */
+    section_bg_color?: string;
+
+    /**
+     * Optional. Bot API 7.0+ Header text color for the section in the #RRGGBB format.
+     * Also available as the CSS variable var(--tg-theme-section-header-text-color).
+     */
+    section_header_text_color?: string;
+
+    /**
+     * Optional. Bot API 7.6+ Section separator color in the #RRGGBB format.
+     * Also available as the CSS variable var(--tg-theme-section-separator-color).
+     */
+    section_separator_color?: string;
+
+    /**
+     * Optional. Bot API 7.0+ Subtitle text color in the #RRGGBB format.
+     * Also available as the CSS variable var(--tg-theme-subtitle-text-color).
+     */
+    subtitle_text_color?: string;
+
+    /**
+     * Optional. Bot API 7.0+ Text color for destructive actions in the #RRGGBB format.
+     * Also available as the CSS variable var(--tg-theme-destructive-text-color).
+     */
+    destructive_text_color?: string;
   };
 
   type PopupParams = {
@@ -146,6 +321,7 @@ export declare namespace TelegramWebApp {
 
     /** A method to set the button text.
      */
+
     setText(text: string): MainButton;
 
     /** A method that sets the button press event handler. An alias for  Telegram.WebApp.onEvent('mainButtonClicked', callback).
@@ -201,6 +377,39 @@ export declare namespace TelegramWebApp {
       is_active?: boolean;
       is_visible?: boolean;
     }): MainButton;
+  };
+
+  type SettingsButton = {
+    /**
+     * Shows whether the context menu item is visible. Set to false by default.
+     */
+    isVisible: boolean;
+
+    /**
+     * A method that sets the press event handler for the Settings item in the context menu. 
+     * An alias for Telegram.WebApp.onEvent('settingsButtonClicked', callback)
+     */
+    onClick(
+      callback: Function,
+    ): SettingsButton;
+
+    /**
+     * A method that removes the press event handler from the Settings item in the context menu. 
+     * An alias for Telegram.WebApp.offEvent('settingsButtonClicked', callback)
+     */
+    offClick(
+      callback: Function,
+    ): SettingsButton;
+
+    /**
+     * A method to make the Settings item in the context menu visible.
+     */
+    show(): SettingsButton;
+
+    /**
+     * A method to hide the Settings item in the context menu.
+     */
+    hide(): SettingsButton;
   };
 
   type HapticFeedback = {
@@ -305,6 +514,92 @@ export declare namespace TelegramWebApp {
     getKeys(
       callback: (error: string | null, keys: string[]) => void
     ): CloudStorage;
+  };
+
+  type BiometricManager = {
+    /**
+     * Bot API 7.2+ Shows whether biometrics object is initialized.
+     */
+    isInited: boolean;
+
+    /**
+     * Bot API 7.2+ Shows whether biometrics is available on the current device.
+     */
+    isBiometricAvailable: boolean;
+
+    /**
+     * Bot API 7.2+ The type of biometrics currently available on the device. Can be one of these values:
+     * 		- finger, fingerprint-based biometrics,
+     * 		- face, face-based biometrics,
+     * 		- unknown, biometrics of an unknown type.
+     */
+    biometricType: string;
+
+    /**
+     * Bot API 7.2+ Shows whether permission to use biometrics has been requested.
+     */
+    isAccessRequested: boolean;
+
+    /**
+     * Bot API 7.2+ Shows whether permission to use biometrics has been granted.
+     */
+    isAccessGranted: boolean;
+
+    /**
+     * Bot API 7.2+ Shows whether the token is saved in secure storage on the device.
+     */
+    isBiometricTokenSaved: boolean;
+
+    /**
+     * Bot API 7.2+ A unique device identifier that can be used to match the token to the device.
+     */
+    deviceId: string;
+
+    /**
+     * Bot API 7.2+ A method that initializes the BiometricManager object. 
+     * It should be called before the object's first use. 
+     * If an optional callback parameter was passed, the callback function will be called when the object is initialized.
+     */
+    init(
+      callback?: Function,
+    ): void;
+
+    /**
+     * A method that requests permission to use biometrics according to the params argument of type BiometricRequestAccessParams. 
+     * If an optional callback parameter was passed, the callback function will be called and the first argument will be a boolean indicating whether the user granted access.
+     */
+    requestAccess(
+      params: BiometricRequestAccessParams,
+      callback?: Function,
+    ): void;
+
+    /**
+     * A method that authenticates the user using biometrics according to the params argument of type BiometricAuthenticateParams. 
+     * If an optional callback parameter was passed, the callback function will be called and the first argument will be a boolean indicating whether the user authenticated successfully. 
+     * If so, the second argument will be a biometric token.
+     */
+    authenticate(
+      params: BiometricAuthenticateParams,
+      callback?: Function,
+    ): void;
+
+    /**
+     * A method that updates the biometric token in secure storage on the device. 
+     * To remove the token, pass an empty string. 
+     * If an optional callback parameter was passed, the callback function will be called and the first argument will be a boolean indicating whether the token was updated.
+     */
+    updateBiometricToken(
+      token: string,
+      callback?: Function,
+    ): void;
+
+    /**
+     * A method that opens the biometric access settings for bots. 
+     * Useful when you need to request biometrics access to users who haven't granted it yet.
+     * 
+     * Note that this method can be called only in response to user interaction with the Mini App interface (e.g. a click inside the Mini App or on the main button)
+     */
+    openSettings(): void;
   };
 
   type WebAppInitData = {
@@ -484,6 +779,13 @@ export declare namespace TelegramWebApp {
      */
     isClosingConfirmationEnabled: boolean;
 
+    /** 
+     * True, if vertical swipes to close or minimize the Mini App are enabled. 
+     * False, if vertical swipes to close or minimize the Mini App are disabled. 
+     * In any case, the user will still be able to minimize and close the Mini App by swiping the Mini App's header.
+    */
+    isVerticalSwipesEnabled: boolean;
+
     /** An object for controlling the back button which can be displayed in the header of the Mini App in the Telegram interface.
      */
     BackButton: BackButton;
@@ -492,6 +794,11 @@ export declare namespace TelegramWebApp {
      */
     MainButton: MainButton;
 
+    /**
+     * This object controls the Settings item in the context menu of the Mini App in the Telegram interface.
+     */
+    SettingsButton: SettingsButton;
+
     /** An object for controlling haptic feedback.
      */
     HapticFeedback: HapticFeedback;
@@ -499,6 +806,10 @@ export declare namespace TelegramWebApp {
     /** An object for controlling cloud storage.
      */
     CloudStorage: CloudStorage;
+
+    /** This object controls biometrics on the device. Before the first use of this object, it needs to be initialized using the init method.
+     */
+    BiometricManager: BiometricManager;
 
     /** Function that returns true if the user's app supports a version of the Bot API that is equal to or higher than the version passed as the parameter.
      */
@@ -522,11 +833,11 @@ export declare namespace TelegramWebApp {
 
     /** Function that sets the app event handler. Check the list of available events.
      */
-    onEvent(eventType: string, eventHandler: Function): void;
+    onEvent<K extends keyof WebAppEventType>(eventType: K, eventHandler: Function): void;
 
     /** Function that deletes a previously set event handler.
      */
-    offEvent(eventType: string, eventHandler: Function): void;
+    offEvent<K extends keyof WebAppEventType>(eventType: K, eventHandler: Function): void;
 
     /** Function used to send data to the bot. When this method is called, a service message is sent to the bot
      * containing the data data of the length up to 4096 bytes, and the Mini App is closed. See the field web_app_data
@@ -617,6 +928,18 @@ export declare namespace TelegramWebApp {
     /** A method that closes the Mini App.
      */
     close(): void;
+
+    /**
+     * A method that enables vertical swipes to close or minimize the Mini App. 
+     * For user convenience, it is recommended to always enable swipes unless they conflict with the Mini App's own gestures.
+     */
+    enableVerticalSwipes(): void;
+
+    /**
+     * A method that disables vertical swipes to close or minimize the Mini App. 
+     * This method is useful if your Mini App uses swipe gestures that may conflict with the gestures for minimizing and closing the app.
+     */
+    disableVerticalSwipes(): void;
   }
 }
 
